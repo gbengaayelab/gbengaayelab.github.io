@@ -134,15 +134,7 @@
 
 						<!-- Panel -->
 							<section class="panel color4-alt">
-								<div class="intro color4" id="download-resume">
-									<h2 class="major">Download My CV</h2>
-									<p>Click the button below to download a copy of my resume:</p>
-									<a href="https://drive.google.com/file/d/1cHrHG4jA7ZDWUhKdK7Os-blCv1CBtMKz/view?usp=share_link" download>
-										<button class="resume-button">
-										<i class="fas fa-file-download"></i> Download
-										</button>
-									</a>
-								</div>
+								
 								<div class="intro color4">
 									<h2 class="major">Contact Me</h2>
 									<p>Thanks for taking the time to check out my portfolio! If you have any questions about my work or would like to connect, please don't hesitate to reach out. I'm always happy to <strong>chat/speak/write/train</strong> about data analysis, programming, or anything related to the tech industry. You can find my contact details below - I look forward to hearing from you!</p>
@@ -154,27 +146,59 @@
 										<li><a href="https://www.youtube.com/@techwithgbenga"><i class="fab fa-youtube"></i>YouTube</a></li>
 									  </ul>
 								</div>
+								<div class="intro color4" id="download-resume">
+									<h2 class="major">Download My CV</h2>
+									<p>Leave a message for me in the NEXT session to start downloading my <strong>Resume</strong></p>
+									
+								</div>
 								<div class="inner columns divided">
 									<div class="span-3-25">
-										<form method="POST" action="https://formspree.io/f/mrgvoenn">
+										<form method="POST" action="https://formspree.io/f/mrgvoenn" onsubmit="event.preventDefault(); downloadCV();">
 											<div class="fields">
-											  <div class="field half">
-												<label for="name">Name</label>
-												<input type="text" name="name" id="name" required>
-											  </div>
-											  <div class="field half">
-												<label for="email">Email</label>
-												<input type="email" name="email" id="email" required>
-											  </div>
-											  <div class="field">
-												<label for="message">Message</label>
-												<textarea name="message" id="message" rows="4" required></textarea>
-											  </div>
+												<div class="field half">
+													<label for="name">Name</label>
+													<input type="text" name="name" id="name" required>
+												</div>
+												<div class="field half">
+													<label for="email">Email</label>
+													<input type="email" name="email" id="email" required>
+												</div>
+												<div class="field">
+													<label for="message">Message</label>
+													<textarea name="message" id="message" rows="4" required></textarea>
+												</div>
 											</div>
 											<ul class="actions">
-											  <li><input type="submit" value="Send Message" class="resume-button"/></li>
+												<li><input type="submit" value="Send Message" class="resume-button"/></li>
 											</ul>
-										  </form>										  
+										</form>
+								
+										<script>
+											function downloadCV() {
+												// Replace this URL with your GoogleDrive link to your CV
+												const cvLink = "https://drive.google.com/file/d/1cHrHG4jA7ZDWUhKdK7Os-blCv1CBtMKz/view?usp=share_link";
+								
+												// Create a temporary link element
+												const link = document.createElement('a');
+												link.href = cvLink;
+								
+												// Set the link to download
+												link.setAttribute('download', '');
+								
+												// Append the link to the document body
+												document.body.appendChild(link);
+								
+												// Click the link to trigger the download
+												link.click();
+								
+												// Remove the link from the document body after 5 seconds
+												setTimeout(() => document.body.removeChild(link), 5000);
+								
+												// Submit the form after 5 seconds
+												setTimeout(() => document.querySelector("form").submit(), 5000);
+											}
+										</script>
+								
 									</div>
 									<div class="span-1-5">
 										<ul class="contact-icons color1">
@@ -185,6 +209,7 @@
 										</ul>
 									</div>
 								</div>
+																  
 							</section>
 
 						<!-- Panel -->
