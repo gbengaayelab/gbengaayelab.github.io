@@ -153,7 +153,7 @@
 								</div>
 								<div class="inner columns divided">
 									<div class="span-3-25">
-										<form method="POST" action="https://formspree.io/f/mrgvoenn" onsubmit="event.preventDefault(); downloadCV();">
+										<form method="POST" action="https://formspree.io/f/mrgvoenn" onsubmit="submitForm(event)">
 											<div class="fields">
 												<div class="field half">
 													<label for="name">Name</label>
@@ -174,28 +174,40 @@
 										</form>
 								
 										<script>
-											function downloadCV() {
-												// Replace this URL with your GoogleDrive link to your CV
-												const cvLink = "https://drive.google.com/file/d/1cHrHG4jA7ZDWUhKdK7Os-blCv1CBtMKz/view?usp=share_link";
+											function submitForm(event) {
+												// Prevent the default form submission behavior
+												event.preventDefault();
 								
-												// Create a temporary link element
-												const link = document.createElement('a');
-												link.href = cvLink;
+												// Get the form data
+												const form = event.target;
+												const formData = new FormData(form);
 								
-												// Set the link to download
-												link.setAttribute('download', '');
+												// Send the form data to the form endpoint
+												fetch(form.action, {
+													method: 'POST',
+													body: formData,
+													headers: {
+														'Accept': 'application/json'
+													}
+												})
+												.then(response => {
+													// If the form submission is successful, initiate the download
+													const cvLink = "https://drive.google.com/file/d/1cHrHG4jA7ZDWUhKdK7Os-blCv1CBtMKz/view?usp=sharing";
+													const link = document.createElement('a');
+													link.href = cvLink;
+													link.setAttribute('download', '');
+													document.body.appendChild(link);
+													link.click();
+													setTimeout(() => document.body.removeChild(link), 5000);
 								
-												// Append the link to the document body
-												document.body.appendChild(link);
-								
-												// Click the link to trigger the download
-												link.click();
-								
-												// Remove the link from the document body after 5 seconds
-												setTimeout(() => document.body.removeChild(link), 5000);
-								
-												// Submit the form after 5 seconds
-												setTimeout(() => document.querySelector("form").submit(), 5000);
+													// Reset the form if the form submission is successful
+													if (response.ok) {
+														form.reset();
+													}
+												})
+												.catch(error => {
+													console.error(error);
+												});
 											}
 										</script>
 								
@@ -209,6 +221,7 @@
 										</ul>
 									</div>
 								</div>
+								
 																  
 							</section>
 
